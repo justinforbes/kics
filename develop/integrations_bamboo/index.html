@@ -10,14 +10,14 @@
       
       
       
-        <link rel="canonical" href="http://docs.kics.io/develop/performance/">
+        <link rel="canonical" href="http://docs.kics.io/develop/integrations_bamboo/">
       
       <link rel="icon" href="../img/logo/kics-hat.ico">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.11">
     
     
       
-        <title>Performance - KICS</title>
+        <title>Bamboo - KICS</title>
       
     
     
@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#kics_accuracy_benchmark" class="md-skip">
+        <a href="#running_kics_in_bamboo" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Performance
+              Bamboo
             
           </span>
         </div>
@@ -228,13 +228,15 @@
         
   
   
+    
+  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../integrations/" class="md-tabs__link">
+      <a href="../integrations/" class="md-tabs__link md-tabs__link--active">
         Integrations
       </a>
     </li>
@@ -256,15 +258,13 @@
         
   
   
-    
-  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../roadmap/" class="md-tabs__link md-tabs__link--active">
+      <a href="../roadmap/" class="md-tabs__link">
         Project
       </a>
     </li>
@@ -731,12 +731,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
       
       
       
@@ -785,11 +787,21 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../integrations_bamboo/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Bamboo
       </a>
+      
     </li>
   
 
@@ -1004,14 +1016,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
       
       
       
@@ -1088,55 +1098,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Performance
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../performance/" class="md-nav__link">
         Performance
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#kics_accuracy_benchmark" class="md-nav__link">
-    KICS Accuracy Benchmark
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#kics_profiling" class="md-nav__link">
-    KICS Profiling
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1195,28 +1161,8 @@
   
   
   
+    
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#kics_accuracy_benchmark" class="md-nav__link">
-    KICS Accuracy Benchmark
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#kics_profiling" class="md-nav__link">
-    KICS Profiling
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -1228,164 +1174,20 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/Checkmarx/kics/edit/master/docs/performance.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/Checkmarx/kics/edit/master/docs/integrations_bamboo.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
 
-  <h1>Performance</h1>
-
-<h2 id="kics_accuracy_benchmark">KICS Accuracy Benchmark<a class="headerlink" href="#kics_accuracy_benchmark" title="Permanent link">&para;</a></h2>
-<p>The values below were obtained after scanning 150 open source projects with KICS (1.2.x) covering
-the supported IaC technologies (c.f., Terraform, Ansible, Kubernetes, Docker, AWS Cloudformation).</p>
-<table>
-<thead>
-<tr>
-<th align="left">IaC Technology</th>
-<th align="left">Query Accuracy<sup>1</sup></th>
-<th align="left">Query Coverage<sup>2</sup></th>
-<th align="left">Scanned IaC files​</th>
-<th align="left">Number of Results​</th>
-<th align="left">Average Scan Time​ (s)</th>
-<th align="left">Average Project Size (MB)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">Terraform​</td>
-<td align="left">99.7%​</td>
-<td align="left">46%</td>
-<td align="left">1176​</td>
-<td align="left">709</td>
-<td align="left">6.6</td>
-<td align="left">33.4​</td>
-</tr>
-<tr>
-<td align="left">Docker​</td>
-<td align="left">98.8%​​</td>
-<td align="left">68%​</td>
-<td align="left">1017​</td>
-<td align="left">5109</td>
-<td align="left">11</td>
-<td align="left">0.7</td>
-</tr>
-<tr>
-<td align="left">Kubernetes​</td>
-<td align="left">99.3%​​</td>
-<td align="left">88.7%​</td>
-<td align="left">6089​</td>
-<td align="left">21753</td>
-<td align="left">7</td>
-<td align="left">90</td>
-</tr>
-<tr>
-<td align="left">CloudFormation​</td>
-<td align="left">95%​</td>
-<td align="left">73%​</td>
-<td align="left">1769​</td>
-<td align="left">5343</td>
-<td align="left">10.2</td>
-<td align="left">4.8</td>
-</tr>
-<tr>
-<td align="left">Ansible ​</td>
-<td align="left">100%</td>
-<td align="left">​ 54%​</td>
-<td align="left">3367​</td>
-<td align="left">1320</td>
-<td align="left">23.3</td>
-<td align="left">4.1</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<p><sup>1</sup> Query Accuracy = TP results / results</p>
-<p><sup>2</sup> Query Coverage = Query with results / Queries</p>
-<hr />
-<p><br/></p>
-<h3 id="global_measures">Global Measures<a class="headerlink" href="#global_measures" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th align="left">Measure</th>
-<th align="left">Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left"><strong>Average Accuracy</strong></td>
-<td align="left">98.6%</td>
-</tr>
-<tr>
-<td align="left"><strong>Total Number of Results</strong></td>
-<td align="left">34234</td>
-</tr>
-<tr>
-<td align="left"><strong>Average Query Coverage</strong></td>
-<td align="left">66.4%</td>
-</tr>
-<tr>
-<td align="left"><strong>Total Scanned IaC Files</strong></td>
-<td align="left">13418</td>
-</tr>
-<tr>
-<td align="left"><strong>Average Scan Time (s)</strong></td>
-<td align="left">11.2</td>
-</tr>
-<tr>
-<td align="left"><strong>Average Project Size (MB)</strong></td>
-<td align="left">26.6</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="kics_profiling">KICS Profiling<a class="headerlink" href="#kics_profiling" title="Permanent link">&para;</a></h2>
-<p>Running Kics with <code>--profiling</code> flag will log the CPU/MEM metrics used for:</p>
-<ul>
-<li>Getting Queries</li>
-<li>Parsing Files</li>
-<li>Scanning Vulnerabilities</li>
-<li>Generating Reports</li>
-</ul>
-<p>Keep in mind that profiling will periodically stop KICS to retrieve the wanted metrics, meaning KICS execution time will increase substantially.</p>
-<hr />
-<h3 id="cpu_profiling">CPU Profiling<a class="headerlink" href="#cpu_profiling" title="Permanent link">&para;</a></h3>
-<p>Flag: <code>--profiling CPU</code></p>
-<pre><code class="language-text">9:43AM INF Scanning with Keeping Infrastructure as Code Secure dev
-9:43AM INF Total CPU usage for get_queries: 6.56s &lt;-
-9:43AM INF Inspector initialized, number of queries=1385
-9:43AM INF Total CPU usage for get_sources: 200.00ms &lt;-
-9:43AM INF Total CPU usage for inspect: 15.43s &lt;-
-9:43AM INF Results saved to file results/results.json fileName=results.json
-9:43AM INF Results saved to file results/results.sarif fileName=results.sarif
-9:43AM INF Results saved to file results/results.html fileName=results.html
-9:43AM INF Total CPU usage for generate_report: 290.00ms &lt;-
-9:43AM INF Files scanned: 221
-9:43AM INF Parsed files: 221
-9:43AM INF Queries loaded: 1385
-9:43AM INF Queries failed to execute: 0
-9:43AM INF Inspector stopped
-9:43AM INF Scan duration: 21.1476197s
-</code></pre>
-<hr />
-<h3 id="mem_profiling">MEM Profiling<a class="headerlink" href="#mem_profiling" title="Permanent link">&para;</a></h3>
-<p>Flag: <code>--profiling MEM</code></p>
-<pre><code class="language-text">9:43AM INF Scanning with Keeping Infrastructure as Code Secure dev
-9:43AM INF Total MEM usage for get_queries: 237.96MB &lt;-
-9:43AM INF Inspector initialized, number of queries=1385
-9:43AM INF Total MEM usage for get_sources: 280.53MB &lt;-
-9:43AM INF Total MEM usage for inspect: 335.44MB &lt;-
-9:43AM INF Results saved to file results/results.json fileName=results.json
-9:43AM INF Results saved to file results/results.sarif fileName=results.sarif
-9:43AM INF Results saved to file results/results.html fileName=results.html
-9:43AM INF Total MEM usage for generate_report: 333.38MB &lt;-
-9:43AM INF Files scanned: 221
-9:43AM INF Parsed files: 221
-9:43AM INF Queries loaded: 1385
-9:43AM INF Queries failed to execute: 0
-9:43AM INF Inspector stopped
-9:43AM INF Scan duration: 21.1476197s
-</code></pre>
+<h1 id="running_kics_in_bamboo">Running KICS in Bamboo<a class="headerlink" href="#running_kics_in_bamboo" title="Permanent link">&para;</a></h1>
+<p>You can easily integrate KICS into Bamboo. The example below demonstrates how you can run KICS in a build plan linked to a GitHub repository.</p>
+<p>After you create a project with a build plan linked to a Github repository, you need to create a task to run KICS.
+The script body should contain <code>docker run -v ${PWD}:/path checkmarx/kics:latest scan -p /path -o /path/results --ci --ignore-on-exit results</code>.</p>
+<p><img alt="creatingTask" src="https://user-images.githubusercontent.com/74001161/152352791-9aa161b9-5d57-456b-a0a8-990930bf7960.gif" /></p>
+<p>For example, to turn on this task every time a commit is merged in the Github repository, you need to create a plan branch that enables that.</p>
+<p><img alt="createPlanBranch" src="https://user-images.githubusercontent.com/74001161/152361840-94768245-0bbe-43cd-adaa-9afb9289e381.gif" /></p>
+<p>The build will run every time a commit is merged in the Github repository.</p>
+<p><img alt="commits" src="https://user-images.githubusercontent.com/74001161/152364388-fa37aede-a299-47bf-a3d1-45985614481c.gif" /></p>
 
               
             </article>
@@ -1399,7 +1201,7 @@ the supported IaC technologies (c.f., Terraform, Ansible, Kubernetes, Docker, AW
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../releases/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Releases" rel="prev">
+        <a href="../integrations_azurepipelines/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Azure DevOps" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -1408,20 +1210,20 @@ the supported IaC technologies (c.f., Terraform, Ansible, Kubernetes, Docker, AW
               <span class="md-footer__direction">
                 Previous
               </span>
-              Releases
+              Azure DevOps
             </div>
           </div>
         </a>
       
       
         
-        <a href="../CONTRIBUTING/" class="md-footer__link md-footer__link--next" aria-label="Next: Contribution" rel="next">
+        <a href="../integrations_bitbucketpipelines/" class="md-footer__link md-footer__link--next" aria-label="Next: Bitbucket Pipelines" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Contribution
+              Bitbucket Pipelines
             </div>
           </div>
           <div class="md-footer__button md-icon">
