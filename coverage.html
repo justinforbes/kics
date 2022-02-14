@@ -99,7 +99,7 @@
 				
 				<option value="file21">github.com/Checkmarx/kics/internal/tracker/ci.go (81.2%)</option>
 				
-				<option value="file22">github.com/Checkmarx/kics/pkg/analyzer/analyzer.go (88.1%)</option>
+				<option value="file22">github.com/Checkmarx/kics/pkg/analyzer/analyzer.go (87.7%)</option>
 				
 				<option value="file23">github.com/Checkmarx/kics/pkg/builder/engine/engine.go (71.8%)</option>
 				
@@ -137,7 +137,7 @@
 				
 				<option value="file40">github.com/Checkmarx/kics/pkg/engine/similarity/similarity_id.go (94.7%)</option>
 				
-				<option value="file41">github.com/Checkmarx/kics/pkg/engine/source/filesystem.go (72.8%)</option>
+				<option value="file41">github.com/Checkmarx/kics/pkg/engine/source/filesystem.go (73.4%)</option>
 				
 				<option value="file42">github.com/Checkmarx/kics/pkg/engine/source/source.go (67.9%)</option>
 				
@@ -213,7 +213,7 @@
 				
 				<option value="file78">github.com/Checkmarx/kics/pkg/progress/circle/circle_progress.go (85.7%)</option>
 				
-				<option value="file79">github.com/Checkmarx/kics/pkg/progress/counter/counter_progress.go (63.6%)</option>
+				<option value="file79">github.com/Checkmarx/kics/pkg/progress/counter/counter_progress.go (90.9%)</option>
 				
 				<option value="file80">github.com/Checkmarx/kics/pkg/progress/progress.go (100.0%)</option>
 				
@@ -237,7 +237,7 @@
 				
 				<option value="file90">github.com/Checkmarx/kics/pkg/report/model/gitlab_sast.go (75.0%)</option>
 				
-				<option value="file91">github.com/Checkmarx/kics/pkg/report/model/junit.go (77.3%)</option>
+				<option value="file91">github.com/Checkmarx/kics/pkg/report/model/junit.go (94.4%)</option>
 				
 				<option value="file92">github.com/Checkmarx/kics/pkg/report/model/sarif.go (94.0%)</option>
 				
@@ -261,13 +261,15 @@
 				
 				<option value="file102">github.com/Checkmarx/kics/pkg/terraformer/aws/aws_cloud_provider.go (93.3%)</option>
 				
-				<option value="file103">github.com/Checkmarx/kics/pkg/terraformer/terraformer.go (76.3%)</option>
+				<option value="file103">github.com/Checkmarx/kics/pkg/terraformer/azure/azure_cloud_provider.go (92.9%)</option>
 				
-				<option value="file104">github.com/Checkmarx/kics/pkg/utils/map.go (71.4%)</option>
+				<option value="file104">github.com/Checkmarx/kics/pkg/terraformer/terraformer.go (74.4%)</option>
 				
-				<option value="file105">github.com/Checkmarx/kics/pkg/utils/random.go (0.0%)</option>
+				<option value="file105">github.com/Checkmarx/kics/pkg/utils/map.go (71.4%)</option>
 				
-				<option value="file106">github.com/Checkmarx/kics/test/helpers.go (15.0%)</option>
+				<option value="file106">github.com/Checkmarx/kics/pkg/utils/random.go (0.0%)</option>
+				
+				<option value="file107">github.com/Checkmarx/kics/test/helpers.go (15.0%)</option>
 				
 				</select>
 			</div>
@@ -555,9 +557,7 @@ func BindFlags(cmd *cobra.Command, v *viper.Viper) error <span class="cov0" titl
                 }</span>
         })
         <span class="cov0" title="0">for key, val := range settingsMap </span><span class="cov0" title="0">{
-                if val == true </span><span class="cov0" title="0">{
-                        continue</span>
-                } else<span class="cov0" title="0"> {
+                if val != true </span><span class="cov0" title="0">{
                         return fmt.Errorf("unknown configuration key: '%s'\nShowing help for '%s' command", key, cmd.Name())
                 }</span>
         }
@@ -573,11 +573,11 @@ func setBoundFlags(flagName string, val interface{}, cmd *cobra.Command) <span c
                 }</span>
                 <span class="cov0" title="0">valStr := strings.Join(paramSlice, ",")
                 if err := cmd.Flags().Set(flagName, fmt.Sprintf("%v", valStr)); err != nil </span><span class="cov0" title="0">{
-                        log.Err(err).Msg("Failed to get Viper flags")
+                        log.Err(err).Msg("Failed to set Viper flags")
                 }</span>
         default:<span class="cov0" title="0">
                 if err := cmd.Flags().Set(flagName, fmt.Sprintf("%v", val)); err != nil </span><span class="cov0" title="0">{
-                        log.Err(err).Msg("Failed to get Viper flags")
+                        log.Err(err).Msg("Failed to set Viper flags")
                 }</span>
         }
 }
@@ -1868,7 +1868,7 @@ func getScanParameters(changedDefaultQueryPath, changedDefaultLibrariesPath bool
                 Path:                        flags.GetMultiStrFlag(flags.PathFlag),
                 PayloadPath:                 flags.GetStrFlag(flags.PayloadPathFlag),
                 PreviewLines:                flags.GetIntFlag(flags.PreviewLinesFlag),
-                QueriesPath:                 flags.GetStrFlag(flags.QueriesPath),
+                QueriesPath:                 flags.GetMultiStrFlag(flags.QueriesPath),
                 LibrariesPath:               flags.GetStrFlag(flags.LibrariesPath),
                 ReportFormats:               flags.GetMultiStrFlag(flags.ReportFormatsFlag),
                 Platform:                    flags.GetMultiStrFlag(flags.TypeFlag),
@@ -2345,13 +2345,13 @@ func (m *Metrics) Stop() <span class="cov3" title="3">{
 // the type of profile
 func getTotal(prof *profile.Profile, idx int) int64 <span class="cov2" title="2">{
         var total, diffTotal int64
-        for _, sample := range prof.Sample </span><span class="cov9" title="36">{
+        for _, sample := range prof.Sample </span><span class="cov8" title="34">{
                 var v int64
                 v = sample.Value[idx]
                 if v &lt; 0 </span><span class="cov0" title="0">{
                         v = -v
                 }</span>
-                <span class="cov9" title="36">total += v
+                <span class="cov8" title="34">total += v
                 if sample.DiffBaseSample() </span><span class="cov0" title="0">{
                         diffTotal += v
                 }</span>
@@ -2376,7 +2376,7 @@ func (m *Metrics) formatTotal(b int64, typeMap map[string]float64, defaultMetric
                 <span class="cov1" title="1">return fmt.Sprintf("%.f%s", metric, defaultMetric)</span>
         }
         <span class="cov6" title="10">for k, u := range typeMap </span><span class="cov10" title="55">{
-                if u &gt;= formatter &amp;&amp; (value/u) &gt;= 1.0 </span><span class="cov7" title="19">{
+                if u &gt;= formatter &amp;&amp; (value/u) &gt;= 1.0 </span><span class="cov7" title="18">{
                         formatter = u
                         mesure = k
                 }</span>
@@ -2627,6 +2627,17 @@ var (
 
 var (
         listKeywordsGoogleDeployment = []string{"resources"}
+        possibleFileTypes            = map[string]bool{
+                ".yml":        true,
+                ".yaml":       true,
+                ".json":       true,
+                ".dockerfile": true,
+                "Dockerfile":  true,
+                ".tf":         true,
+                "tfvars":      true,
+                ".proto":      true,
+                ".sh":         true,
+        }
 )
 
 const (
@@ -2658,9 +2669,19 @@ func Analyze(paths []string) (model.AnalyzedPaths, error) <span class="cov4" tit
                         return returnAnalyzedPaths, errors.Wrap(err, "failed to analyze path")
                 }</span>
                 <span class="cov4" title="7">if err := filepath.Walk(path, func(path string, info os.FileInfo, err error) error </span><span class="cov7" title="36">{
-                        if !info.IsDir() </span><span class="cov6" title="28">{
+                        if err != nil </span><span class="cov0" title="0">{
+                                return err
+                        }</span>
+
+                        <span class="cov7" title="36">ext := filepath.Ext(path)
+                        if ext == "" </span><span class="cov4" title="10">{
+                                ext = filepath.Base(path)
+                        }</span>
+
+                        <span class="cov7" title="36">if _, ok := possibleFileTypes[ext]; ok </span><span class="cov6" title="22">{
                                 files = append(files, path)
                         }</span>
+
                         <span class="cov7" title="36">return nil</span>
                 }); err != nil <span class="cov0" title="0">{
                         log.Error().Msgf("failed to analize path %s: %s", path, err)
@@ -2670,7 +2691,7 @@ func Analyze(paths []string) (model.AnalyzedPaths, error) <span class="cov4" tit
         // unwanted is the channel shared by the workers that contains the unwanted files that the parser will ignore
         <span class="cov4" title="6">unwanted := make(chan string, len(files))
 
-        for _, file := range files </span><span class="cov6" title="28">{
+        for _, file := range files </span><span class="cov6" title="22">{
                 wg.Add(1)
                 // analyze the files concurrently
                 go worker(file, results, unwanted, &amp;wg)
@@ -2697,13 +2718,13 @@ func Analyze(paths []string) (model.AnalyzedPaths, error) <span class="cov4" tit
 // worker determines the type of the file by ext (dockerfile and terraform)/content and
 // writes the answer to the results channel
 // if no types were found, the worker will write the path of the file in the unwanted channel
-func worker(path string, results, unwanted chan&lt;- string, wg *sync.WaitGroup) <span class="cov6" title="28">{
+func worker(path string, results, unwanted chan&lt;- string, wg *sync.WaitGroup) <span class="cov6" title="22">{
         defer wg.Done()
         ext := filepath.Ext(path)
         if ext == "" </span><span class="cov2" title="2">{
                 ext = filepath.Base(path)
         }</span>
-        <span class="cov6" title="28">switch ext </span>{
+        <span class="cov6" title="22">switch ext </span>{
         // Dockerfile
         case ".dockerfile", "Dockerfile":<span class="cov2" title="2">
                 results &lt;- "dockerfile"</span>
@@ -4694,7 +4715,7 @@ func createVulnLines(startPos int, lines []string) []model.CodeLine <span class=
 func SelectLineWithMinimumDistance(distances map[int]int, startingFrom int) int <span class="cov5" title="7">{
         minDistance, lineOfMinDistance := constants.MaxInteger, startingFrom
         for line, distance := range distances </span><span class="cov6" title="10">{
-                if distance &lt; minDistance || distance == minDistance &amp;&amp; line &lt; lineOfMinDistance </span><span class="cov6" title="10">{
+                if distance &lt; minDistance || distance == minDistance &amp;&amp; line &lt; lineOfMinDistance </span><span class="cov5" title="9">{
                         minDistance = distance
                         lineOfMinDistance = line
                 }</span>
@@ -5476,7 +5497,7 @@ func GetSources(source []string) (ExtractedPath, error) <span class="cov10" titl
 
                 getterDst, err := getPaths(&amp;goGetter)
                 if err != nil </span><span class="cov4" title="2">{
-                        log.Error().Msgf("failed to find path %s: %s", path, err)
+                        log.Error().Msgf("%s", err)
                         return ExtractedPath{}, err
                 }</span>
                 <span class="cov7" title="3">tempDst, local := checkSymLink(getterDst, path)
@@ -5721,17 +5742,17 @@ func (s *FileSystemSourceProvider) GetSources(ctx context.Context,
 
 func (s *FileSystemSourceProvider) walkDir(ctx context.Context, scanPath string, resolved bool,
         sink Sink, resolverSink ResolverSink, extensions model.Extensions) error <span class="cov1" title="3">{
-        return filepath.Walk(scanPath, func(path string, info os.FileInfo, err error) error </span><span class="cov9" title="25035">{
+        return filepath.Walk(scanPath, func(path string, info os.FileInfo, err error) error </span><span class="cov9" title="25159">{
                 if err != nil </span><span class="cov0" title="0">{
                         return err
                 }</span>
 
-                <span class="cov9" title="25035">if shouldSkip, skipFolder := s.checkConditions(info, extensions, path, resolved); shouldSkip </span><span class="cov9" title="24796">{
+                <span class="cov9" title="25159">if shouldSkip, skipFolder := s.checkConditions(info, extensions, path, resolved); shouldSkip </span><span class="cov9" title="24924">{
                         return skipFolder
                 }</span>
 
                 // ------------------ Helm resolver --------------------------------
-                <span class="cov5" title="239">if info.IsDir() </span><span class="cov1" title="1">{
+                <span class="cov5" title="235">if info.IsDir() </span><span class="cov1" title="1">{
                         excluded, errRes := resolverSink(ctx, strings.ReplaceAll(path, "\\", "/"))
                         if errRes != nil </span><span class="cov0" title="0">{
                                 sentryReport.ReportSentry(&amp;sentryReport.Report{
@@ -5750,14 +5771,14 @@ func (s *FileSystemSourceProvider) walkDir(ctx context.Context, scanPath string,
                 }
                 // -----------------------------------------------------------------
 
-                <span class="cov5" title="238">c, err := os.Open(filepath.Clean(path))
+                <span class="cov5" title="234">c, err := os.Open(filepath.Clean(path))
                 if err != nil </span><span class="cov0" title="0">{
                         return errors.Wrap(err, "failed to open file")
                 }</span>
-                <span class="cov5" title="238">defer closeFile(c, info)
+                <span class="cov5" title="234">defer closeFile(c, info)
 
                 err = sink(ctx, strings.ReplaceAll(path, "\\", "/"), c)
-                if err != nil </span><span class="cov5" title="119">{
+                if err != nil </span><span class="cov5" title="117">{
                         sentryReport.ReportSentry(&amp;sentryReport.Report{
                                 Message:  fmt.Sprintf("Filesystem files provider couldn't parse file, file=%s", info.Name()),
                                 Err:      err,
@@ -5765,7 +5786,7 @@ func (s *FileSystemSourceProvider) walkDir(ctx context.Context, scanPath string,
                                 FileName: info.Name(),
                         }, true)
                 }</span>
-                <span class="cov5" title="238">return nil</span>
+                <span class="cov5" title="234">return nil</span>
         })
 }
 
@@ -5781,7 +5802,7 @@ func openScanFile(scanPath string, extensions model.Extensions) (*os.File, error
         <span class="cov1" title="1">return c, nil</span>
 }
 
-func closeFile(file *os.File, info os.FileInfo) <span class="cov5" title="238">{
+func closeFile(file *os.File, info os.FileInfo) <span class="cov5" title="234">{
         if err := file.Close(); err != nil </span><span class="cov0" title="0">{
                 sentryReport.ReportSentry(&amp;sentryReport.Report{
                         Message:  fmt.Sprintf("Filesystem couldn't close file, file=%s", info.Name()),
@@ -5793,27 +5814,27 @@ func closeFile(file *os.File, info os.FileInfo) <span class="cov5" title="238">{
 }
 
 func (s *FileSystemSourceProvider) checkConditions(info os.FileInfo, extensions model.Extensions,
-        path string, resolved bool) (bool, error) <span class="cov10" title="25038">{
-        if info.IsDir() </span><span class="cov8" title="5566">{
+        path string, resolved bool) (bool, error) <span class="cov10" title="25162">{
+        if info.IsDir() </span><span class="cov8" title="5590">{
                 if f, ok := s.excludes[info.Name()]; ok &amp;&amp; containsFile(f, info) </span><span class="cov1" title="1">{
                         log.Info().Msgf("Directory ignored: %s", path)
                         return true, filepath.SkipDir
                 }</span>
-                <span class="cov8" title="5565">_, err := os.Stat(filepath.Join(path, "Chart.yaml"))
-                if err != nil || resolved </span><span class="cov8" title="5563">{
+                <span class="cov8" title="5589">_, err := os.Stat(filepath.Join(path, "Chart.yaml"))
+                if err != nil || resolved </span><span class="cov8" title="5587">{
                         return true, nil
                 }</span>
                 <span class="cov1" title="2">return false, nil</span>
         }
 
-        <span class="cov9" title="19472">if f, ok := s.excludes[info.Name()]; ok &amp;&amp; containsFile(f, info) </span><span class="cov0" title="0">{
+        <span class="cov9" title="19572">if f, ok := s.excludes[info.Name()]; ok &amp;&amp; containsFile(f, info) </span><span class="cov0" title="0">{
                 log.Trace().Msgf("File ignored: %s", path)
                 return true, nil
         }</span>
-        <span class="cov9" title="19472">if !extensions.Include(filepath.Ext(path)) &amp;&amp; !extensions.Include(filepath.Base(path)) </span><span class="cov9" title="19234">{
+        <span class="cov9" title="19572">if !extensions.Include(filepath.Ext(path)) &amp;&amp; !extensions.Include(filepath.Base(path)) </span><span class="cov9" title="19338">{
                 return true, nil
         }</span>
-        <span class="cov5" title="238">return false, nil</span>
+        <span class="cov5" title="234">return false, nil</span>
 }
 
 func containsFile(fileList []os.FileInfo, target os.FileInfo) bool <span class="cov1" title="1">{
@@ -6478,7 +6499,7 @@ import (
 // Source is the path to the queries
 // Types are the types given by the flag --type for query selection mechanism
 type FilesystemSource struct {
-        Source         string
+        Source         []string
         Types          []string
         CloudProviders []string
         Library        string
@@ -6500,7 +6521,7 @@ const (
 )
 
 // NewFilesystemSource initializes a NewFilesystemSource with source to queries and types of queries to load
-func NewFilesystemSource(source string, types, cloudProviders []string, libraryPath string) *FilesystemSource <span class="cov7" title="17">{
+func NewFilesystemSource(source, types, cloudProviders []string, libraryPath string) *FilesystemSource <span class="cov7" title="17">{
         log.Debug().Msg("source.NewFilesystemSource()")
 
         if len(types) == 0 </span><span class="cov0" title="0">{
@@ -6511,8 +6532,12 @@ func NewFilesystemSource(source string, types, cloudProviders []string, libraryP
                 cloudProviders = []string{""}
         }</span>
 
+        <span class="cov7" title="17">for s := range source </span><span class="cov7" title="17">{
+                source[s] = filepath.FromSlash(source[s])
+        }</span>
+
         <span class="cov7" title="17">return &amp;FilesystemSource{
-                Source:         filepath.FromSlash(source),
+                Source:         source,
                 Types:          types,
                 CloudProviders: cloudProviders,
                 Library:        filepath.FromSlash(libraryPath),
@@ -6695,22 +6720,26 @@ func checkQueryExclude(metadata map[string]interface{}, queryParameters *QueryIn
 // QueryMetadata struct
 func (s *FilesystemSource) GetQueries(queryParameters *QueryInspectorParameters) ([]model.QueryMetadata, error) <span class="cov6" title="10">{
         queryDirs := make([]string, 0)
-        err := filepath.Walk(s.Source,
-                func(p string, f os.FileInfo, err error) error </span><span class="cov10" title="52">{
-                        if err != nil </span><span class="cov3" title="3">{
-                                return err
-                        }</span>
+        var err error
 
-                        <span class="cov9" title="49">if f.IsDir() || f.Name() != QueryFileName </span><span class="cov9" title="42">{
-                                return nil
-                        }</span>
+        for _, source := range s.Source </span><span class="cov6" title="10">{
+                err = filepath.Walk(source,
+                        func(p string, f os.FileInfo, err error) error </span><span class="cov10" title="52">{
+                                if err != nil </span><span class="cov3" title="3">{
+                                        return err
+                                }</span>
 
-                        <span class="cov5" title="7">queryDirs = append(queryDirs, filepath.Dir(p))
-                        return nil</span>
-                })
-        <span class="cov6" title="10">if err != nil </span><span class="cov3" title="3">{
-                return nil, errors.Wrap(err, "failed to get query Source")
-        }</span>
+                                <span class="cov9" title="49">if f.IsDir() || f.Name() != QueryFileName </span><span class="cov9" title="42">{
+                                        return nil
+                                }</span>
+
+                                <span class="cov5" title="7">queryDirs = append(queryDirs, filepath.Dir(p))
+                                return nil</span>
+                        })
+                <span class="cov6" title="10">if err != nil </span><span class="cov3" title="3">{
+                        return nil, errors.Wrap(err, "failed to get query Source")
+                }</span>
+        }
 
         <span class="cov5" title="7">queries := make([]model.QueryMetadata, 0, len(queryDirs))
         for _, queryDir := range queryDirs </span><span class="cov5" title="7">{
@@ -14628,7 +14657,7 @@ func NewProgressBar(label string, total int64, progress chan int64, wg *sync.Wai
                 progress: progress,
                 pBar:     newPb,
                 wg:       wg,
-                close: func() error </span><span class="cov0" title="0">{
+                close: func() error </span><span class="cov1" title="1">{
                         newPb.Finish()
                         return nil
                 }</span>,
@@ -14637,7 +14666,7 @@ func NewProgressBar(label string, total int64, progress chan int64, wg *sync.Wai
 
 // Start initializes the Counter Progress Bar
 func (p ProgressBar) Start() <span class="cov3" title="2">{
-        defer func() </span><span class="cov0" title="0">{
+        defer func() </span><span class="cov1" title="1">{
                 err := p.Close()
                 if err != nil </span><span class="cov0" title="0">{
                         log.Error().Msgf("failed to stop progress bar %v", err)
@@ -14649,14 +14678,14 @@ func (p ProgressBar) Start() <span class="cov3" title="2">{
                 newProgress, ok := &lt;-p.progress
                 p.currentProgress += newProgress
                 p.pBar.Increment()
-                if !ok || p.currentProgress &gt;= p.pBar.Total() </span><span class="cov0" title="0">{
+                if !ok || p.currentProgress &gt;= p.pBar.Total() </span><span class="cov1" title="1">{
                         break</span>
                 }
         }
 }
 
 // Close stops the Counter Progress Bar
-func (p ProgressBar) Close() error <span class="cov0" title="0">{ return p.close() }</span>
+func (p ProgressBar) Close() error <span class="cov1" title="1">{ return p.close() }</span>
 </pre>
 		
 		<pre class="file" id="file80" style="display: none">package progress
@@ -15749,9 +15778,10 @@ type junitTestSuite struct {
 }
 
 type junitTestCase struct {
-        XMLName  xml.Name       `xml:"testcase"`
-        Name     string         `xml:"name,attr"`
-        Failures []junitFailure `xml:"failure"`
+        XMLName   xml.Name       `xml:"testcase"`
+        Name      string         `xml:"name,attr"`
+        ClassName string         `xml:"classname,attr"`
+        Failures  []junitFailure `xml:"failure"`
 }
 
 type junitFailure struct {
@@ -15772,7 +15802,7 @@ func NewJUnitReport(time string) JUnitReport <span class="cov10" title="3">{
                 Name:       fmt.Sprintf("KICS v%s", constants.Version),
                 Time:       time,
                 Failures:   "",
-                TestSuites: make([]junitTestSuite, 0),
+                TestSuites: []junitTestSuite{},
         }
 }</span>
 
@@ -15782,14 +15812,18 @@ func (jUnit *junitTestSuites) GenerateTestEntry(query *model.QueryResult) <span 
         if query.CISDescriptionTextFormatted != "" </span><span class="cov0" title="0">{
                 queryDescription = query.CISDescriptionTextFormatted
         }</span>
-        <span class="cov1" title="1">failedTestCase := junitTestCase{
-                Name:     fmt.Sprintf("[%s]: %s", query.QueryName, queryDescription),
-                Failures: make([]junitFailure, len(query.Files)),
-        }
+
+        <span class="cov1" title="1">failedTestCases := []junitTestCase{}
 
         for idx := range query.Files </span><span class="cov1" title="1">{
+                failedTestCase := junitTestCase{
+                        Name:      fmt.Sprintf("%s: %s file in line %d", query.QueryName, query.Files[idx].FileName, query.Files[idx].Line),
+                        ClassName: query.Platform,
+                        Failures:  []junitFailure{},
+                }
+
                 failedTest := junitFailure{
-                        Type: query.QueryName,
+                        Type: queryDescription,
                         Message: fmt.Sprintf(
                                 "A problem was found on '%s' file in line %d, %s, but %s.",
                                 query.Files[idx].FileName,
@@ -15798,23 +15832,19 @@ func (jUnit *junitTestSuites) GenerateTestEntry(query *model.QueryResult) <span 
                                 query.Files[idx].KeyActualValue,
                         ),
                 }
-                failedTestCase.Failures[idx] = failedTest
+
+                failedTestCase.Failures = append(failedTestCase.Failures, failedTest)
+                failedTestCases = append(failedTestCases, failedTestCase)
         }</span>
-        <span class="cov1" title="1">for idx := range jUnit.TestSuites </span><span class="cov0" title="0">{
-                if jUnit.TestSuites[idx].Name == query.Platform </span><span class="cov0" title="0">{
-                        jUnit.TestSuites[idx].TestCases = append(jUnit.TestSuites[idx].TestCases, failedTestCase)
-                        jUnit.TestSuites[idx].failCount += len(query.Files)
-                        return
-                }</span>
-        }
+
         <span class="cov1" title="1">newTestSuite := junitTestSuite{
-                Name:      fmt.Sprintf("[%s]", query.Platform),
+                Name:      query.Platform,
                 Failures:  "",
                 Tests:     "",
                 failCount: len(query.Files),
-                TestCases: make([]junitTestCase, 0),
+                TestCases: failedTestCases,
         }
-        newTestSuite.TestCases = append(newTestSuite.TestCases, failedTestCase)
+
         jUnit.TestSuites = append(jUnit.TestSuites, newTestSuite)</span>
 }
 
@@ -17440,6 +17470,59 @@ func (a CloudProvider) Import(ctx context.Context, options *importer.ImportOptio
 		<pre class="file" id="file103" style="display: none">//go:build !dev
 // +build !dev
 
+package azure
+
+import (
+        "context"
+        "errors"
+        "sync"
+        "time"
+
+        importer "github.com/GoogleCloudPlatform/terraformer/cmd"
+        azureterraformer "github.com/GoogleCloudPlatform/terraformer/providers/azure"
+        "github.com/GoogleCloudPlatform/terraformer/terraformutils"
+)
+
+var terraformerTimeout = time.Minute * 3
+
+// ImporterFunc is the function kics uses to import resources (for testing porpuses)
+var ImporterFunc func(provider terraformutils.ProviderGenerator, options importer.ImportOptions, args []string) error = importer.Import
+
+// CloudProvider is the AZURE Cloud Provider
+type CloudProvider struct{}
+
+var provider = &amp;azureterraformer.AzureProvider{}
+
+// Import imports the terraformer resources into the destination using terraformer
+func (a CloudProvider) Import(ctx context.Context, options *importer.ImportOptions, destination string) error <span class="cov8" title="1">{
+        ctxT, cancel := context.WithTimeout(ctx, terraformerTimeout)
+        defer cancel()
+        wg := sync.WaitGroup{}
+        done := make(chan error, 1)
+
+        wg.Add(1)
+        go func() </span><span class="cov8" title="1">{
+                defer wg.Done()
+                done &lt;- ImporterFunc(provider, *options, []string{options.ResourceGroup})
+        }</span>()
+
+        <span class="cov8" title="1">go func() </span><span class="cov8" title="1">{
+                defer close(done)
+                wg.Wait()
+        }</span>()
+
+        <span class="cov8" title="1">select </span>{
+        case err := &lt;-done:<span class="cov8" title="1">
+                return err</span>
+        case &lt;-ctxT.Done():<span class="cov0" title="0">
+                return errors.New("terraformer import execution timeout")</span>
+        }
+}
+</pre>
+		
+		<pre class="file" id="file104" style="display: none">//go:build !dev
+// +build !dev
+
 package terraformer
 
 import (
@@ -17455,6 +17538,7 @@ import (
         tfLogger "log"
 
         "github.com/Checkmarx/kics/pkg/terraformer/aws"
+        "github.com/Checkmarx/kics/pkg/terraformer/azure"
         importer "github.com/GoogleCloudPlatform/terraformer/cmd"
         "github.com/pkg/errors"
         "github.com/rs/zerolog/log"
@@ -17523,6 +17607,8 @@ func Import(terraformerPath, destinationPath string) (string, error) <span class
         switch pathOptions.CloudProvider </span>{
         case "aws":<span class="cov1" title="1">
                 provider = aws.CloudProvider{}</span>
+        case "azure":<span class="cov0" title="0">
+                provider = azure.CloudProvider{}</span>
         default:<span class="cov0" title="0">
                 return "", errors.New("unsupported Cloud Provider")</span>
         }
@@ -17575,7 +17661,7 @@ func deleteOutputFile(path string, output fs.FileInfo) <span class="cov0" title=
 }
 </pre>
 		
-		<pre class="file" id="file104" style="display: none">package utils
+		<pre class="file" id="file105" style="display: none">package utils
 
 import "sort"
 
@@ -17597,7 +17683,7 @@ func MergeMaps(map1, map2 map[string]interface{}) <span class="cov0" title="0">{
 }
 </pre>
 		
-		<pre class="file" id="file105" style="display: none">package utils
+		<pre class="file" id="file106" style="display: none">package utils
 
 import (
         "os"
@@ -17632,7 +17718,7 @@ func NextRandom() string <span class="cov0" title="0">{
 // ==============================================================================
 </pre>
 		
-		<pre class="file" id="file106" style="display: none">package test
+		<pre class="file" id="file107" style="display: none">package test
 
 import (
         "bytes"
