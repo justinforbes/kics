@@ -215,7 +215,7 @@
 				
 				<option value="file79">github.com/Checkmarx/kics/v2/pkg/parser/json/parser.go (78.1%)</option>
 				
-				<option value="file80">github.com/Checkmarx/kics/v2/pkg/parser/json/tfplan.go (84.6%)</option>
+				<option value="file80">github.com/Checkmarx/kics/v2/pkg/parser/json/tfplan.go (84.0%)</option>
 				
 				<option value="file81">github.com/Checkmarx/kics/v2/pkg/parser/jsonfilter/parser/error_listener.go (0.0%)</option>
 				
@@ -2623,13 +2623,13 @@ func (m *Metrics) Stop() <span class="cov3" title="3">{
 // the type of profile
 func getTotal(prof *profile.Profile, idx int) int64 <span class="cov2" title="2">{
         var total, diffTotal int64
-        for _, sample := range prof.Sample </span><span class="cov9" title="50">{
+        for _, sample := range prof.Sample </span><span class="cov9" title="52">{
                 var v int64
                 v = sample.Value[idx]
                 if v &lt; 0 </span><span class="cov0" title="0">{
                         v = -v
                 }</span>
-                <span class="cov9" title="50">total += v
+                <span class="cov9" title="52">total += v
                 if sample.DiffBaseSample() </span><span class="cov0" title="0">{
                         diffTotal += v
                 }</span>
@@ -5656,7 +5656,7 @@ func detectLastSingle(line int, dis map[int]int, idInfo map[int]interface{}, id 
         if idInfo == nil </span><span class="cov4" title="12">{
                 return true
         }</span>
-        <span class="cov3" title="6">for key, value := range dis </span><span class="cov4" title="9">{
+        <span class="cov3" title="6">for key, value := range dis </span><span class="cov4" title="8">{
                 if value == dis[line] &amp;&amp; key != line </span><span class="cov1" title="1">{
                         // check if we are only looking at original data equivalent to the vulnerability
                         if ok := idInfo[id].(map[int]int)[key]; ok != 0 </span><span class="cov1" title="1">{
@@ -5865,7 +5865,7 @@ func createVulnLines(startPos int, lines []string) *[]model.CodeLine <span class
 func SelectLineWithMinimumDistance(distances map[int]int, startingFrom int) int <span class="cov5" title="8">{
         minDistance, lineOfMinDistance := constants.MaxInteger, startingFrom
         for line, distance := range distances </span><span class="cov6" title="12">{
-                if distance &lt; minDistance || distance == minDistance &amp;&amp; line &lt; lineOfMinDistance </span><span class="cov5" title="8">{
+                if distance &lt; minDistance || distance == minDistance &amp;&amp; line &lt; lineOfMinDistance </span><span class="cov6" title="10">{
                         minDistance = distance
                         lineOfMinDistance = line
                 }</span>
@@ -7316,12 +7316,12 @@ func (s *FileSystemSourceProvider) GetSources(ctx context.Context,
 
 func (s *FileSystemSourceProvider) walkDir(ctx context.Context, scanPath string, resolved bool,
         sink Sink, resolverSink ResolverSink, extensions model.Extensions) error <span class="cov1" title="3">{
-        return filepath.Walk(scanPath, func(path string, info os.FileInfo, err error) error </span><span class="cov9" title="35307">{
+        return filepath.Walk(scanPath, func(path string, info os.FileInfo, err error) error </span><span class="cov9" title="35313">{
                 if err != nil </span><span class="cov0" title="0">{
                         return err
                 }</span>
 
-                <span class="cov9" title="35307">if shouldSkip, skipFolder := s.checkConditions(info, extensions, path, resolved); shouldSkip </span><span class="cov9" title="34944">{
+                <span class="cov9" title="35313">if shouldSkip, skipFolder := s.checkConditions(info, extensions, path, resolved); shouldSkip </span><span class="cov9" title="34950">{
                         return skipFolder
                 }</span>
 
@@ -7393,7 +7393,7 @@ func closeFile(file *os.File, info os.FileInfo) <span class="cov6" title="362">{
 }
 
 func (s *FileSystemSourceProvider) checkConditions(info os.FileInfo, extensions model.Extensions,
-        path string, resolved bool) (bool, error) <span class="cov10" title="35326">{
+        path string, resolved bool) (bool, error) <span class="cov10" title="35332">{
         s.mu.RLock()
         defer s.mu.RUnlock()
 
@@ -7419,12 +7419,12 @@ func (s *FileSystemSourceProvider) checkConditions(info os.FileInfo, extensions 
                 <span class="cov1" title="3">return false, nil</span>
         }
 
-        <span class="cov9" title="27974">if f, ok := s.excludes[info.Name()]; ok &amp;&amp; containsFile(f, info) </span><span class="cov0" title="0">{
+        <span class="cov9" title="27980">if f, ok := s.excludes[info.Name()]; ok &amp;&amp; containsFile(f, info) </span><span class="cov0" title="0">{
                 log.Trace().Msgf("File ignored: %s", path)
                 return true, nil
         }</span>
-        <span class="cov9" title="27974">ext, _ := utils.GetExtension(path)
-        if !extensions.Include(ext) </span><span class="cov9" title="27612">{
+        <span class="cov9" title="27980">ext, _ := utils.GetExtension(path)
+        if !extensions.Include(ext) </span><span class="cov9" title="27618">{
                 log.Trace().Msgf("File ignored: %s", path)
                 return true, nil
         }</span>
@@ -20905,12 +20905,12 @@ func parseFunctionCall(functionData map[string][]interface{}) string <span class
 
 // function to check if an identifier is a parameter/variable and add the required keyword if so
 func convertToParamVar(str string, s *BicepVisitor) string <span class="cov5" title="49">{
-        for variable := range s.varList </span><span class="cov7" title="215">{
+        for variable := range s.varList </span><span class="cov7" title="212">{
                 if variable == str </span><span class="cov3" title="7">{
                         return "variables('" + str + CloseParenthesis
                 }</span>
         }
-        <span class="cov5" title="42">for parameter := range s.paramList </span><span class="cov9" title="617">{
+        <span class="cov5" title="42">for parameter := range s.paramList </span><span class="cov9" title="608">{
                 if parameter == str </span><span class="cov4" title="23">{
                         return "parameters('" + str + CloseParenthesis
                 }</span>
@@ -23093,7 +23093,7 @@ type KicsPlanNamedResource map[string]interface{}
 
 // parseTFPlan unmarshals Document as a plan so it can be rebuilt with only
 // the required information
-func parseTFPlan(doc model.Document) (model.Document, error) <span class="cov10" title="3">{
+func parseTFPlan(doc model.Document) (model.Document, error) <span class="cov10" title="4">{
         var plan *hcl_plan.Plan
         b, err := json.Marshal(doc)
         if err != nil </span><span class="cov0" title="0">{
@@ -23101,18 +23101,18 @@ func parseTFPlan(doc model.Document) (model.Document, error) <span class="cov10"
         }</span>
         // Unmarshal our Document as a plan so we are able retrieve planned_values
         // in a easier way
-        <span class="cov10" title="3">err = json.Unmarshal(b, &amp;plan)
-        if err != nil </span><span class="cov6" title="2">{
+        <span class="cov10" title="4">err = json.Unmarshal(b, &amp;plan)
+        if err != nil </span><span class="cov5" title="2">{
                 // Consider as regular JSON and not tfplan
                 return model.Document{}, err
         }</span>
 
-        <span class="cov1" title="1">parsedPlan := readPlan(plan)
+        <span class="cov5" title="2">parsedPlan := readPlan(plan)
         return parsedPlan, nil</span>
 }
 
 // readPlan will get the information needed and parse it in a way KICS understands it
-func readPlan(plan *hcl_plan.Plan) model.Document <span class="cov1" title="1">{
+func readPlan(plan *hcl_plan.Plan) model.Document <span class="cov5" title="2">{
         kp := KicsPlan{
                 Resource: make(map[string]KicsPlanResource),
         }
@@ -23125,27 +23125,25 @@ func readPlan(plan *hcl_plan.Plan) model.Document <span class="cov1" title="1">{
         if err != nil </span><span class="cov0" title="0">{
                 return model.Document{}
         }</span>
-        <span class="cov1" title="1">err = json.Unmarshal(tmpDocBytes, &amp;doc)
+        <span class="cov5" title="2">err = json.Unmarshal(tmpDocBytes, &amp;doc)
         if err != nil </span><span class="cov0" title="0">{
                 return model.Document{}
         }</span>
 
-        <span class="cov1" title="1">return doc</span>
+        <span class="cov5" title="2">return doc</span>
 }
 
 // readModule will iterate over all planned_value getting the information required
-func (kp *KicsPlan) readModule(module *hcl_plan.StateModule) <span class="cov1" title="1">{
-        // initialize all the types interfaces
-        for _, resource := range module.Resources </span><span class="cov1" title="1">{
-                convNamedRes := make(map[string]KicsPlanNamedResource)
-                kp.Resource[resource.Type] = convNamedRes
-        }</span>
-        // fill in all the types interfaces
-        <span class="cov1" title="1">for _, resource := range module.Resources </span><span class="cov1" title="1">{
-                kp.Resource[resource.Type][resource.Name] = resource.AttributeValues
-        }</span>
+func (kp *KicsPlan) readModule(module *hcl_plan.StateModule) <span class="cov5" title="2">{
+        // initialize all the types interfaces and fill in all the types interfaces
+        for _, resource := range module.Resources </span><span class="cov8" title="3">{
+                if _, type_map := kp.Resource[resource.Type]; !type_map </span><span class="cov5" title="2">{
+                        kp.Resource[resource.Type] = make(map[string]KicsPlanNamedResource)
+                }</span>
+                <span class="cov8" title="3">kp.Resource[resource.Type][resource.Address] = resource.AttributeValues</span>
+        }
 
-        <span class="cov1" title="1">for _, childModule := range module.ChildModules </span><span class="cov0" title="0">{
+        <span class="cov5" title="2">for _, childModule := range module.ChildModules </span><span class="cov0" title="0">{
                 kp.readModule(childModule)
         }</span>
 }
